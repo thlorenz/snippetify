@@ -1,0 +1,28 @@
+{
+    "name" : "snippetify",
+    "version" : "0.0.0",
+    "description" : "Splits a given JavaScript file into as many parsable snippets as possible.",
+    "main" : "snippetify.js",
+    "scripts" : {
+        "test" : "tap test/*.js"
+    },
+    "repository" : {
+        "type" : "git",
+        "url" : "git://github.com/thlorenz/snippetify.git"
+    },
+    "homepage" : "https://github.com/thlorenz/snippetify",
+    "dependencies" : {
+    },
+    "devDependencies" : {
+    },
+    "keywords" : [
+    ],
+    "tags": "snippet parse split script" ,
+    "author" : {
+        "name" : "Thorsten Lorenz",
+        "email" : "thlorenz@gmx.de",
+        "url" : "http://thlorenz.com"
+    },
+    "license" : "MIT",
+    "engine" : { "node" : ">=0.6" }
+}
