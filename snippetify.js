@@ -26,5 +26,5 @@ module.exports = function snippetify(script) {
 
     snippets.push({ start: snippetStart, end: lineno, code: snippet });
   }
-  return { chunks: chunks, lines: script.split('\n') };
+  return snippets;
 };
