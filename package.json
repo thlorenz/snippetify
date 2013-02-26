@@ -17,7 +17,8 @@
   "devDependencies": {
     "trap": "~0.4.1",
     "cardinal": "~0.3.1",
-    "difflet": "~0.2.3"
+    "difflet": "~0.2.3",
+    "ansistyles": "~0.1.1"
   },
   "keywords": "snippet parse split script",
   "author": {
