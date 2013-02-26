@@ -1,34 +1,6 @@
 'use strict';
 /*jshint asi: true */
-
-var test       =  require('trap').test
-  , styles     =  require('ansistyles')
-  , highlight  =  require('cardinal').highlight
-  , diff       =  require('difflet')({ indent: 2, comma: 'first'})
-  , snippetify =  require('..')
-
-function inspect(obj, depth) {
-  return require('util').inspect(obj, false, depth || 5, true)
-}
-
-function check(msg, fn, expected, trace) {
-  var lines = ('' + fn).split('\n')
-
-  lines.shift()
-  lines.pop()
-
-  var code = lines.join('\n')
-    , result = snippetify(code)
-
-  // don't include ast or fixed code in comparison
-  result = result.map(function (x) { return { start: x.start, end: x.end, raw: x.raw } })
-
-  if (trace) console.log(diff.compare({}, result))
-
-  test(msg + styles.reset('\n') + highlight(code, { linenos: true }), function (t) {
-    t.deepEqual(result, expected, styles.reset('\n') + inspect(expected))
-  })
-}
+var check = require('./utils/check')
 
 check(
     'single assignment'
@@ -84,3 +56,28 @@ var o = {
     ]
 )
 
+check(
+    'single line array assignment'
+  , function _() {
+var arr = [ 1, 2, 3]
+    }
+  , [ { "start" : 1
+      , "end" : 1
+      , "raw" : "var arr = [ 1, 2, 3]" }
+    ]
+)
+
+check(
+    'multi line array assignment'
+  , function _() {
+var arr = [
+    1
+  , 2
+  , 3
+  ]
+    }
+  , [ { "start" : 1
+      , "end" : 5
+      , "raw" : "var arr = [\n    1\n  , 2\n  , 3\n  ]" }
+    ]
+)
