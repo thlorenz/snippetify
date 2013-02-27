@@ -4,7 +4,6 @@ var fs         =  require('fs')
   , code       =  fs.readFileSync(__filename, 'utf-8')
   , snippets   =  snippetify(code);
 
-// This meaningless comment will be a separate snippet since it is parsable on its own
 function printRawCode(snippets) {
   // prints all lines exactly as they appeared in the script
   var lines = snippets
