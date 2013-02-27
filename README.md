@@ -49,7 +49,7 @@ Outputs:
 snippetify(script[, esprimaOpts])
 ```
 
-```js
+```
 /**
  * Splits given script into as many root level snippets as possible, one line being the smallest possible.
  * Keeps root level expressions intact, i.e. does not pull out snippets from inside functions.
