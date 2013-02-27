@@ -73,4 +73,4 @@ snippetify(script[, esprimaOpts])
 
 ## More Examples
 
-Find more examples [here]()
+Find more examples [here](https://github.com/thlorenz/snippetify/tree/master/examples)
