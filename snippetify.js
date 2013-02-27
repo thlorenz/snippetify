@@ -1,9 +1,9 @@
 'use strict';
 
 var parse = require('esprima').parse
-  , commaFirstAssignment = /^[\t ]*,[\t ]*\S[\t ]*=[\t ]*\S+/;
+  , commaFirstAssignment = /^[\t ]*,[\t ]*\S+[\t ]*=[\t ]*\S+/;
 
-function singleLineFix(line) {
+function fix(line) {
   var fixed = line;
 
   if (commaFirstAssignment.test(line)) {
@@ -23,7 +23,7 @@ var s = module.exports = function snippetify(script) {
   function nextChunk(code, raw) {
     var singleLine =  code.length ===  0
       , line       =  lines[lineno] 
-      , fixed      =  singleLine ? singleLineFix(line) : line;
+      , fixed      =  fix(line);
 
     raw = line + raw;
     code = fixed + code;
@@ -54,7 +54,3 @@ var s = module.exports = function snippetify(script) {
 
   return snippets;
 };
-
-/*console.log(
-  s('var o = {\n    a: 1\n  , b: 2  , c: 3} ')
-);*/

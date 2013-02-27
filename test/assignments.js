@@ -57,7 +57,27 @@ var o = {
 )
 
 check(
-    'single line array assignment'
+    'var and multiline object literal assignment comma first'
+  , function _() {
+var foo = 'bar'
+  , obj = {
+      aa : 1
+    , bb : 2
+    , cc : 3 };
+    }
+  , [ 
+      { "start" : 1
+      , "end" : 1
+      , "raw" : "var foo = 'bar'" }
+    , 
+      { "start" : 2
+      , "end" : 5
+      , "raw" : "  , obj = {\n      aa : 1\n    , bb : 2\n    , cc : 3 };" }
+    ] 
+)
+
+check(
+  'single line array assignment'
   , function _() {
 var arr = [ 1, 2, 3]
     }
