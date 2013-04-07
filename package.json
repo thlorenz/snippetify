@@ -1,6 +1,6 @@
 {
   "name": "snippetify",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Splits a given JavaScript file into as many parsable snippets as possible.",
   "main": "snippetify.js",
   "scripts": {
