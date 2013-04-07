@@ -50,7 +50,11 @@ module.exports = function snippetify(script, esprimaOpts) {
     try {
       return { code: code, raw: raw, ast: parse(code, esprimaOpts) };
     } catch(e) {
-      if (--lineno === -1) throw new Error('unable to snippetify ' + code);
+      if (--lineno === -1) {
+        var err = new Error('unable to snippetify ' + code);
+        err.inner = e;
+        throw err;
+      }
       return nextChunk('\n' + code, '\n' + raw);
     }
   }
