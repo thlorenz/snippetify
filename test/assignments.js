@@ -34,12 +34,17 @@ var a = 3
     }
   , [ { "start" : 1
       , "end" : 1
-      , "raw" : "var a = 3" }
+      , "raw" : "var a = 3" 
+      , "code": "var a = 3" 
+      }
     , 
       { "start" : 2
       , "end" : 2
-      , "raw" : "  , b = 2;" }
+      , "raw" : "  , b = 2;" 
+      , "code": "var b = 2;" 
+     }
     ]
+  , true
 )
 
 check(
@@ -68,12 +73,15 @@ var foo = 'bar'
   , [ 
       { "start" : 1
       , "end" : 1
-      , "raw" : "var foo = 'bar'" }
+      , "raw" : "var foo = 'bar'" 
+      , "code" : "var foo = 'bar'" }
     , 
       { "start" : 2
       , "end" : 5
-      , "raw" : "  , obj = {\n      aa : 1\n    , bb : 2\n    , cc : 3 };" }
+      , "raw" : "  , obj = {\n      aa : 1\n    , bb : 2\n    , cc : 3 };"
+      , "code" : "var obj = {\n      aa : 1\n    , bb : 2\n    , cc : 3 };" }
     ] 
+    , true
 )
 
 check(
@@ -98,6 +106,8 @@ var arr = [
     }
   , [ { "start" : 1
       , "end" : 5
-      , "raw" : "var arr = [\n    1\n  , 2\n  , 3\n  ]" }
+      , "raw" : "var arr = [\n    1\n  , 2\n  , 3\n  ]" 
+      , "code" : "var arr = [\n    1\n  , 2\n  , 3\n  ]" }
     ]
+  , true
 )

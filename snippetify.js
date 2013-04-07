@@ -8,7 +8,7 @@ function fix(line) {
 
   if (commaFirstAssignment.test(line)) {
     var idx = line.indexOf(',');
-    fixed = fixed.slice(0, idx) + ' ' + fixed.slice(idx + 1);
+    fixed = 'var' + fixed.slice(0, idx).trim() + ' ' + fixed.slice(idx + 1).trim();
   }
 
   return fixed;

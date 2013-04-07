@@ -11,7 +11,7 @@ function inspect(obj, depth) {
   return require('util').inspect(obj, false, depth || 5, true)
 }
 
-module.exports = function check(msg, fn, expected) {
+module.exports = function check(msg, fn, expected, includeCode) {
   var lines = ('' + fn).split('\n')
 
   lines.shift()
@@ -21,7 +21,11 @@ module.exports = function check(msg, fn, expected) {
     , result = snippetify(code)
 
   // don't include ast or fixed code in comparison
-  result = result.map(function (x) { return { start: x.start, end: x.end, raw: x.raw } })
+  result = result.map(function (x) { 
+    var o = { start: x.start, end: x.end, raw: x.raw } 
+    if (includeCode) o.code = x.code;
+    return o;
+  })
 
   if (!expected) console.log(diff.compare({}, result))
 

@@ -12,7 +12,8 @@
   },
   "homepage": "https://github.com/thlorenz/snippetify",
   "dependencies": {
-    "esprima": "~1.0.2"
+    "esprima": "~1.0.2",
+    "trap": "~0.4.2"
   },
   "devDependencies": {
     "trap": "~0.4.1",
