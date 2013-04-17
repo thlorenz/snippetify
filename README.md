@@ -57,13 +57,15 @@ snippetify(script[, esprimaOpts])
  * @name snippetify
  * @function
  * @param script {String} The script to split into snippets.
- * @param esprimaOpts {Object} Options to pass to the esprima parser (optional):
+ * @param opts {Object} Options, most of which will be passed to the esprima parser (optional):
  *    loc      :  Nodes have line and column-based location info
  *    range    :  Nodes have an index-based location range (array)
  *    raw      :  Literals have extra property which stores the verbatim source
  *    tokens   :  An extra array containing all found tokens
  *    comment  :  An extra array containing all line and block comments
  *    tolerant :  An extra array containing all errors found, attempts to continue parsing when an error is encountered
+ *  -- Non esprima opts:
+ *    nonstrict:  Removes 'use strict' directives during parse to prevent esprima parser from throwing errors due to use strict violations
  * @return {Array{Object}} each with the following properties:
  *    code     :  The snippet code that was parsed and possibly fixed
  *    raw      :  The snippet code that was parsed before it was fixed

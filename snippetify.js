@@ -1,9 +1,12 @@
 'use strict';
 
 var parse = require('esprima').parse
-  , commaFirstAssignment = /^[\t ]*,[\t ]*\S+[\t ]*=[\t ]*\S+/;
+  , commaFirstAssignment = /^[\t ]*,[\t ]*\S+[\t ]*=[\t ]*\S+/
+  , useStrict = /^ *['"]use strict['"][; ]*$/
+  , nonStrict = '// *** non strict snippetify fix +++***+++&&&'
+  ;
 
-function fix(line) {
+function fix(line, hideStrict) {
   var fixed = line;
 
   if (commaFirstAssignment.test(line)) {
@@ -11,7 +14,18 @@ function fix(line) {
     fixed = 'var' + fixed.slice(0, idx).trim() + ' ' + fixed.slice(idx + 1).trim();
   }
 
+  if (hideStrict && useStrict.test(line)) {
+    fixed = nonStrict + line;
+  }
+
   return fixed;
+}
+
+function unfix(code, hideStrict) {
+  // some fixes should be undone even in the adapted code
+  if (hideStrict) code = code.replace(nonStrict, '');
+
+  return code;
 }
 
 /**
@@ -21,19 +35,22 @@ function fix(line) {
  * @name snippetify
  * @function
  * @param script {String} The script to split into snippets.
- * @param esprimaOpts {Object} Options to pass to the esprima parser (optional):
+ * @param opts {Object} Options, most of which will be passed to the esprima parser (optional):
  *    loc      :  Nodes have line and column-based location info
  *    range    :  Nodes have an index-based location range (array)
  *    raw      :  Literals have extra property which stores the verbatim source
  *    tokens   :  An extra array containing all found tokens
  *    comment  :  An extra array containing all line and block comments
  *    tolerant :  An extra array containing all errors found, attempts to continue parsing when an error is encountered
+ *  -- Non esprima opts:
+ *    nonstrict:  Removes 'use strict' directives during parse to prevent esprima parser from throwing errors due to use strict violations
  * @return {Array{Object}} each with the following properties:
  *    code     :  The snippet code that was parsed and possibly fixed
  *    raw      :  The snippet code that was parsed before it was fixed
  *    ast      :  The AST for the snippet (note ast.tokens will be present if tokens: true is set)
  */
-module.exports = function snippetify(script, esprimaOpts) {
+var snippetify = module.exports = function (script, opts) {
+  opts = opts || {};
   var snippets = []
     , lines = script.split('\n');
 
@@ -42,13 +59,16 @@ module.exports = function snippetify(script, esprimaOpts) {
   function nextChunk(code, raw) {
     var singleLine =  code.length ===  0
       , line       =  lines[lineno] 
-      , fixed      =  fix(line);
+      , fixed      =  fix(line, opts.nonstrict);
 
     raw = line + raw;
     code = fixed + code;
 
     try {
-      return { code: code, raw: raw, ast: parse(code, esprimaOpts) };
+      var ast = parse(code, opts);
+      code = unfix(code, opts.nonstrict);
+
+      return { code: code, raw: raw, ast: ast };
     } catch(e) {
       if (--lineno === -1) {
         var err = new Error('unable to snippetify ' + code);
@@ -77,3 +97,8 @@ module.exports = function snippetify(script, esprimaOpts) {
 
   return snippets;
 };
+
+var code = 
+    'function foo() {\n"use strict";\n  var o = { a: 1, a: 2 };\n}\n\n;'
+  + 'function bar() {\n\'use strict\';\n  var o = { a: 1, a: 2 };\n}';
+snippetify(code, { nonstrict: true });
