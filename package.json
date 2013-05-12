@@ -12,16 +12,16 @@
   },
   "homepage": "https://github.com/thlorenz/snippetify",
   "dependencies": {
-    "esprima": "~1.0.2",
-    "trap": "~0.4.2"
+    "esprima": "~1.0.2"
   },
   "devDependencies": {
     "trap": "~0.4.1",
     "cardinal": "~0.3.1",
     "difflet": "~0.2.3",
-    "ansistyles": "~0.1.1"
+    "ansistyles": "~0.1.1",
+    "trap": "~0.4.2"
   },
-  "keywords": "snippet parse split script",
+  "keywords": [ "snippet", "parse", "split", "script" ],
   "author": {
     "name": "Thorsten Lorenz",
     "email": "thlorenz@gmx.de",
